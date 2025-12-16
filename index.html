@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Berkas</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📁 Sistem Manajemen Berkas</h1>
+            <div class="clock" id="clock">00:00:00</div>
+        </div>
+
+        <div class="content">
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Total Berkas</h3>
+                    <div class="value" id="totalBerkas">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Luas (Ha)</h3>
+                    <div class="value" id="totalLuas">0</div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-primary" onclick="toggleForm()">
+                    ➕ Tambah Berkas
+                </button>
+                <label for="fileInput" class="btn btn-success">
+                    📊 Import Excel
+                </label>
+                <input type="file" id="fileInput" accept=".xlsx,.xls" onchange="importExcel(event)">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Cari berkas..." onkeyup="searchBerkas()">
+                </div>
+            </div>
+
+            <div class="form-container" id="formContainer">
+                <h2 style="margin-bottom: 20px; color: #374151;" id="formTitle">Tambah Berkas Baru</h2>
+                <form id="berkasForm" onsubmit="saveBerkas(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nomor *</label>
+                            <input type="text" id="nomor" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal *</label>
+                            <input type="date" id="tanggal" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Direktur *</label>
+                            <input type="text" id="direktur" required>
+                        </div>
+                        <div class="form-group">
+                            <label>PT *</label>
+                            <input type="text" id="pt" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Desa *</label>
+                            <input type="text" id="desa" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Kecamatan *</label>
+                            <input type="text" id="kecamatan" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Luas (Ha) *</label>
+                            <input type="text" id="luas" required placeholder="Contoh: 12.250">
+                        </div>
+                        <div class="form-group">
+                            <label>Peruntukan *</label>
+                            <input type="text" id="peruntukan" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-cancel" onclick="cancelForm()">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <table id="berkasTable">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nomor</th>
+                            <th>Tanggal</th>
+                            <th>Direktur</th>
+                            <th>PT</th>
+                            <th>Desa</th>
+                            <th>Kecamatan</th>
+                            <th>Luas (Ha)</th>
+                            <th>Peruntukan</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr>
+                            <td colspan="10" class="empty-state">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                <h3>Belum ada data berkas</h3>
+                                <p>Klik "Tambah Berkas" atau "Import Excel" untuk memulai</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
